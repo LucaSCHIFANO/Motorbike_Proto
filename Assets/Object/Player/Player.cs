@@ -3,11 +3,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
-public class Player : MonoBehaviour
+public class Player : Entity
 {
 
     [Header("References")]
-    [SerializeField] private GameObject visual;
     private Rigidbody2D rb;
 
 
@@ -16,50 +15,26 @@ public class Player : MonoBehaviour
     [SerializeField] private float backSpeed;
     [SerializeField] private float forwardSpeed;
     private Vector2 currentJoystickPosition;
+    private float deadzone = 0.3f;
 
 
-    [Header("Player Jump")]
-    [SerializeField] private float jumpTime;
-    [SerializeField] private float jumpForce;
-    private float jumpVelocity;
-    private bool isJumping = false;
-    private float currentJumpTime = 0f;
-    [SerializeField] private float fallMultiplier;
-    private bool isGrounded = true;
-    private Vector2 localVisualPosition;
+    
 
 
-    private void Awake()
+    [Header("Player Shoot")]
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private Transform bulletSpawnPoint;
+
+    protected override void Awake()
     {
+        base.Awake();
         rb = GetComponent<Rigidbody2D>();        
     }
 
-    void Start()
-    {
-        localVisualPosition = visual.transform.localPosition;
-    }
-
-    void FixedUpdate()
+    protected override void FixedUpdate()
     {
         Movement();
         Jump();
-    }
-
-    void Update()
-    {
-        // Manage jump time
-        currentJumpTime -= Time.deltaTime;
-        if (currentJumpTime <= 0)
-        {
-            isJumping = false;
-        }
-
-        if(visual.transform.localPosition.y < localVisualPosition.y)
-        {
-            visual.transform.localPosition = localVisualPosition;
-            isGrounded = true;
-            jumpVelocity = 0;
-        }
     }
 
     #region Movements
@@ -84,21 +59,15 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles the player's jump
+    /// Handles the shoot logic
     /// </summary>
-    private void Jump()
+    private void Shoot()
     {
-        if (isJumping)
+        if (bulletPrefab != null && bulletSpawnPoint != null)
         {
-            jumpVelocity = jumpForce * Time.deltaTime;
-            isGrounded = false;
+            Projectile bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity).GetComponent<Projectile>();
+            bullet.InitProjectile(Vector2.right, 10f, EntitySide.Player, GetHeight());
         }
-        else if (!isGrounded)
-        {
-            jumpVelocity -= fallMultiplier * Time.fixedDeltaTime;
-        }
-
-        visual.transform.position += Vector3.up * jumpVelocity;
     }
 
     #endregion
@@ -110,7 +79,10 @@ public class Player : MonoBehaviour
     /// </summary>
     public void MovementInput(InputAction.CallbackContext context)
     {
-        currentJoystickPosition = context.ReadValue<Vector2>();
+        Vector2 inputVector = context.ReadValue<Vector2>();
+        inputVector = new Vector2( Mathf.Abs(inputVector.x) > deadzone ? Mathf.Sign(inputVector.x) : 0, 
+            Mathf.Abs(inputVector.y) > deadzone ? Mathf.Sign(inputVector.y) : 0);
+        currentJoystickPosition = inputVector;
     }
 
     /// <summary>
@@ -124,6 +96,17 @@ public class Player : MonoBehaviour
             currentJumpTime = jumpTime;
         }
         else if (context.canceled) isJumping = false;
+    }
+
+    /// <summary>
+    /// Receives the player's shoot input
+    /// </summary>
+    public void ShootInput(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Shoot();
+        }
     }
 
     #endregion

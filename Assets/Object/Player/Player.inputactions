@@ -10,7 +10,7 @@
                     "name": "Movement",
                     "type": "Value",
                     "id": "23742aeb-665d-4441-967f-a984b1307a34",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true,
@@ -95,6 +95,17 @@
                 },
                 {
                     "name": "",
+                    "id": "9dfa4518-3dda-4a3f-ae49-2b9fb36a1395",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "StickDeadzone(min=0.25)",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "efa1d443-d291-427f-9eb4-a74ba8a7359a",
                     "path": "<Keyboard>/l",
                     "interactions": "",
@@ -117,8 +128,41 @@
                 },
                 {
                     "name": "",
+                    "id": "5c6f9a83-fdd0-48a8-a3bd-78f555e22fc4",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "56a079a8-8cdb-45a3-9391-5aff9c228808",
                     "path": "<Keyboard>/semicolon",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "41b653ff-3a24-4492-9158-758b47cd2895",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70193dac-3848-4ca9-a9d0-27c544410aa3",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
