@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 3074155445074535061}
   - component: {fileID: -7110932879385832945}
   m_Layer: 0
-  m_Name: Trail
+  m_Name: TraiEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,7 +136,7 @@ Animator:
   m_GameObject: {fileID: 7128600077012768982}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ed1e660a37dafe94f989507f12a2fd39, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8b9ba24a2be02e04083234e1b89989e7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

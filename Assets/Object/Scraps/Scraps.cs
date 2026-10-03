@@ -14,12 +14,12 @@ public class Scraps : Entity
 
     protected override void Start()
     {
-        base.Start();
+        originalMaterial = sr.material;
         isJumping = true;
         currentJumpTime = jumpTime;
     }
 
-    public void Init()
+    public void Init(float height)
     {
         float randomXForce = Random.Range(0.5f, 10f);
         float randomXDirection = Random.Range(0, 2) == 0 ? -1f : 1f;
@@ -32,6 +32,9 @@ public class Scraps : Entity
         rb.AddForce(direction, ForceMode2D.Impulse);     
 
         sr.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+
+        localVisualStartingPosition = visual.transform.localPosition;
+        visual.transform.localPosition = new Vector2(visual.transform.localPosition.x, visual.transform.localPosition.y + height);
     }
 
     protected override void Update()

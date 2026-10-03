@@ -20,6 +20,7 @@ public class Entity : MonoBehaviour
     protected Material originalMaterial;
     [SerializeField] protected Material blinkMaterial;
     [SerializeField] protected float blinkDuration;
+    bool isDead = false;
 
     [Header("Death")]
     [SerializeField] protected List<Scraps> deathScraps = new List<Scraps>();
@@ -143,6 +144,9 @@ public class Entity : MonoBehaviour
     /// </summary>
     protected virtual void Die()
     {
+        if(isDead) return;
+
+        isDead = true;
         Destroy(gameObject);
         Debug.Log($"{gameObject.name} has died.");
 
@@ -151,7 +155,7 @@ public class Entity : MonoBehaviour
             foreach (Scraps scrap in deathScraps)
             {
                 Scraps instantiatedScrap = Instantiate(scrap, transform.position, Quaternion.identity).GetComponent<Scraps>();
-                instantiatedScrap.Init();
+                instantiatedScrap.Init(GetHeight());
             }
         }   
     }

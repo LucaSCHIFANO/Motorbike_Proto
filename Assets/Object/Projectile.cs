@@ -3,17 +3,20 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private bool isInitialized = false;
+    public bool IsInitialized { get => isInitialized; }
+
     private Entity.EntitySide side;
+    public Entity.EntitySide Side { get => side; }
+
     private Vector3 direction;
     private float speed;
     private float height = 0;
+    public float Height { get => height; }
+
     [SerializeField] private GameObject shadow;
     [SerializeField] private float damage = 1f;
-
-    public Entity.EntitySide Side { get => side; }
-    public float Height { get => height; }
     public float Damage { get => damage; }
-    public bool IsInitialized { get => isInitialized; set => isInitialized = value; }
+
 
     /// <summary>
     /// Initializes the projectile with the given parameters.
